@@ -1,45 +1,52 @@
-const leftParentheses = []
-const rightParentheses = []
 
 function balancingParentheses(string) {
+    const array = []
+    for (letter of string) {
+        array.push(letter)
+    }
 
-      for (parentheses of string) {
-        if (parentheses === '(') {
-            leftParentheses.push(parentheses)
-        } else if (parentheses === ')') {
-            rightParentheses.push(parentheses)
+    const left = []
+    const right = []
+    let total = 0
+
+    if (array[0] === ')') {
+        array.shift()
+        total += 1
+    } else if (array[-1] === '(') {
+        array.pop()
+        total += 1
+    }
+
+    for (each of array) {
+        if (each === "(") {
+            left.push(each)
+        } else if (each === ")") {
+            right.push(each)
         }
-  }  
+    }
 
-  if (Math.abs(leftParentheses.length - rightParentheses.length >= 3)) {
-      return Math.abs(leftParentheses.length - rightParentheses.length)
-  }
+    if (right.length > left.length) {
+        return right.length - left.length + total                                       
+    } else if (left.length > right.length) {
+        return left.length - right.length + total
+    } else {
+        return total
+    }
 
-  let total = 0
-  if (string[0] === ')' && string.endsWith('(')) {
-       total = total + 2
-  } else if (string[0] === ')') {
-       total = total + 1
-  } else if (string.endsWith('(')) {
-      total = total + 1
-  }
-  return total
 }
 
-console.log(balancingParentheses(')))))'))
-// console.log(rightParentheses)
-// console.log(leftParentheses)
 
 
 if (require.main === module) {
+  console.clear()  
   // add your own tests in here
-  console.log("Expecting: 0");
-  console.log(balancingParentheses('(()())'));
+  console.log("Expecting: 4");
+  console.log(balancingParentheses('(((('));
 
   console.log("");
 
-  console.log("Expecting: 2");
-  console.log(balancingParentheses('()))'));
+  console.log("Expecting: 6");
+  console.log(balancingParentheses('))))))'));
 
   console.log("");
 
